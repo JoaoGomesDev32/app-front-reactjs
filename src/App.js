@@ -1,9 +1,10 @@
 import "./App.css";
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-      <h1>Olá da Danki Code</h1>
+      <h2>{props.texto.chamada1}</h2>
+      <h2>{props.texto.chamada2}</h2>
     </div>
   );
 }
