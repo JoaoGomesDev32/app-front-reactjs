@@ -1,25 +1,34 @@
 import { useState, useEffect } from "react";
 
 export default function App(props) {
-  const [count, setCount] = useState(0);
-  const [nome, setNome] = useState("Joao");
-
-  function callAlert() {}
+  const [hora, setHora] = useState(13);
+  const [minuto, setMinuto] = useState(50);
+  const [segundo, setSegundo] = useState(55);
 
   useEffect(() => {
-    callAlert();
-  }, []);
+    const interval = setInterval(() => {
+      setSegundo(segundo + 1);
+      if (segundo > 59) {
+        setSegundo(0);
+        setMinuto(minuto + 1);
+        if (minuto > 59) {
+          setMinuto(0);
+          setHora(hora + 1);
+          if (hora > 23) {
+            setHora(0);
+          }
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <div>
-      {nome === "João" ? (
-        <div>
-          <p>{nome}</p>
-        </div>
-      ) : (
-        <div>
-          <p style={{ color: "red" }}>{nome}</p>
-        </div>
-      )}
+      <h2 style={{ color: "red", textAlign: "center" }}>
+        {hora}:{minuto}:{segundo}
+      </h2>
     </div>
   );
 }
