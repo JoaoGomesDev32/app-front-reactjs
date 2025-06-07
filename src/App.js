@@ -1,20 +1,25 @@
-import { useState } from "react";
-import "./App.css";
-// import Header from "./Header";
+import { useState, useEffect } from "react";
 
-function App(props) {
+export default function App(props) {
   const [count, setCount] = useState(0);
-  const [nome, setNome] = useState("João");
-  const [numeros, setNumeros] = useState([1, 2, 3, 4, 5]);
-  const [obj, setObj] = useState({ nome: "João", idade: 35 });
+  const [nome, setNome] = useState("Joao");
 
+  function callAlert() {}
+
+  useEffect(() => {
+    callAlert();
+  }, []);
   return (
     <div>
-      {numeros.map(function (val) {
-        return <p>{val}</p>;
-      })}
+      {nome === "João" ? (
+        <div>
+          <p>{nome}</p>
+        </div>
+      ) : (
+        <div>
+          <p style={{ color: "red" }}>{nome}</p>
+        </div>
+      )}
     </div>
   );
 }
-
-export default App;
