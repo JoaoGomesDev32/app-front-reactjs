@@ -1,34 +1,29 @@
 import { useState, useEffect } from "react";
+import Api from "./Api.js";
 
-export default function App(props) {
-  const [hora, setHora] = useState(13);
-  const [minuto, setMinuto] = useState(50);
-  const [segundo, setSegundo] = useState(55);
+export default function App() {
+  const [nomes, setNomes] = useState([]);
+
+  async function initApi() {
+    let pegaNomes = await Api.getPersons();
+    setNomes(pegaNomes);
+  }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSegundo(segundo + 1);
-      if (segundo > 59) {
-        setSegundo(0);
-        setMinuto(minuto + 1);
-        if (minuto > 59) {
-          setMinuto(0);
-          setHora(hora + 1);
-          if (hora > 23) {
-            setHora(0);
-          }
-        }
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
+    initApi();
   });
 
   return (
     <div>
-      <h2 style={{ color: "red", textAlign: "center" }}>
-        {hora}:{minuto}:{segundo}
-      </h2>
+      {nomes.map(function (data) {
+        return (
+          <div>
+            <h2>
+              {data.name} | {data.email}
+            </h2>
+          </div>
+        );
+      })}
     </div>
   );
 }
